@@ -11,10 +11,13 @@ function Home() {
             <InteractiveGraph className={styles.graph} />
             <div className={styles.startContainer}>
                 <h2>Genetic Algorithm Visualization</h2>
-                <p>A visual introduction to genetic algorithms.</p>
+                <p className={styles.startDescription}>
+                    A visual introduction to how Genetic Algorithms can <br />
+                    be used to solve the Traveling Salesman Problem.
+                </p>
                 <button
                     className={styles.startButton}
-                    onClick={() => navigate('/problem')}
+                    onClick={() => navigate('/tsp')}
                 >
                     Start
                 </button>
