@@ -8,12 +8,12 @@ type Props = {
 
 const navLinks = [
     { href: Routes.TSP, label: 'Traveling Salesman Problem' },
+    { href: Routes.INTUITION, label: 'Genetic Algorithm Intuition' },
     { href: Routes.FITNESS, label: 'Fitness Function' },
-    { href: Routes.SELECTION, label: 'Selection' },
     { href: Routes.CROSSOVER, label: 'Crossover' },
     { href: Routes.MUTATION, label: 'Mutation' },
-    { href: Routes.ALGORITHM, label: 'Genetic Algorithm' },
-]
+    { href: Routes.ALGORITHM, label: 'Genetic Algorithm in Action' },
+];
 
 function Header({ backgroundColor }: Props) {
     return (

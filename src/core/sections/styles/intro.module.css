@@ -1,0 +1,56 @@
+.container {
+    height: calc(100% - 460px);
+    width: 100%;
+    padding: 230px 15%;
+
+    display: flex;
+    gap: 200px;
+}
+
+.chapterDetails {
+    width: calc(100% - 600px);
+}
+
+.chapterDetails h2 {
+    font-weight: 400;
+}
+
+.subsections {
+    list-style: none;
+    width: 400px;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.subsection {
+    display: flex;
+    gap: 25px;
+    background-color: white;
+    padding: 30px;
+    cursor: pointer;
+
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.25));
+    transition: filter 0.3s ease-in-out;
+}
+
+.subsection:hover {
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.25));
+}
+
+.subsectionFigure {
+    width: 96px;
+    height: 96px;
+}
+
+.subsectionTitle {
+    display: flex;
+    align-items: center;
+
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
