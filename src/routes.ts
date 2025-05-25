@@ -1,7 +1,7 @@
 const Routes = {
     HOME: '/',
     TSP: '/tsp',
-    INTUITION: '/intuition',
+    OVERVIEW: '/overview',
     FITNESS: '/fitness',
     CROSSOVER: '/crossover',
     MUTATION: '/mutation',

@@ -1,0 +1,29 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.textContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100%;
+    width: calc(45% - 60px);
+    padding: 0 30px;
+    border-right: 1px #aaa solid;
+}
+
+.nextSection {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+}
+
+.figureContainer {
+    position: relative;
+    flex: 1;
+}

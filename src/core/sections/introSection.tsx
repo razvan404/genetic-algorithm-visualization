@@ -1,4 +1,5 @@
-import styles from './styles/intro.module.css';
+import { scrollToSection } from './utils';
+import styles from './styles/introSection.module.css';
 
 type SubsectionProps = {
     id: string;
@@ -14,7 +15,7 @@ type Props = {
     backgroundColor?: string;
 };
 
-function Intro({
+function IntroSection({
     chapter,
     title,
     description,
@@ -33,11 +34,7 @@ function Intro({
                     <li
                         key={subsection.id}
                         className={styles.subsection}
-                        onClick={() => {
-                            document
-                                .getElementById(subsection.id)
-                                ?.scrollIntoView({ behavior: 'smooth' });
-                        }}
+                        onClick={() => scrollToSection(subsection.id)}
                     >
                         {subsection.figure && (
                             <img
@@ -56,4 +53,4 @@ function Intro({
     );
 }
 
-export default Intro;
+export default IntroSection;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './styles/sections.module.css';
 
 type SectionProps = {
@@ -12,7 +13,7 @@ type Props = {
 
 function Sections({ sections }: Props) {
     const containerRef = React.useRef<HTMLDivElement>(null);
-    const sectionRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
+    const sectionRefs = React.useRef<Record<string, HTMLElement | null>>({});
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -55,7 +56,7 @@ function Sections({ sections }: Props) {
     return (
         <div className={styles.container} ref={containerRef}>
             {sections.map(({ id, component }) => (
-                <div
+                <section
                     key={id}
                     id={id}
                     ref={(element) => {
@@ -64,7 +65,7 @@ function Sections({ sections }: Props) {
                     className={styles.section}
                 >
                     {component}
-                </div>
+                </section>
             ))}
         </div>
     );

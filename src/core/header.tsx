@@ -8,7 +8,7 @@ type Props = {
 
 const navLinks = [
     { href: Routes.TSP, label: 'Traveling Salesman Problem' },
-    { href: Routes.INTUITION, label: 'Genetic Algorithm Intuition' },
+    { href: Routes.OVERVIEW, label: 'Genetic Algorithm Overview' },
     { href: Routes.FITNESS, label: 'Fitness Function' },
     { href: Routes.CROSSOVER, label: 'Crossover' },
     { href: Routes.MUTATION, label: 'Mutation' },
