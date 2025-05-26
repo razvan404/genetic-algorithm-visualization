@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { shuffle } from '@/utils';
+import { formatScientificNotation, factorialApprox } from '@/utils';
 
 type Node = {
     id: number;
@@ -18,10 +19,13 @@ type Props = {
     nodeColor?: string;
     edgeColor?: string;
     tspPathColor?: string;
+    displayTotalDistance?: boolean;
+    displayCitiesCount?: boolean;
+    displayMaxRoutesCount?: boolean;
     className?: string;
 };
 
-function FixedGraphVisualizer({
+function CompleteGraphVisualizer({
     nodeCount = 8,
     radius = 150,
     width = 400,
@@ -31,19 +35,24 @@ function FixedGraphVisualizer({
     nodeColor = '#ffca66',
     edgeColor = 'rgba(120, 120, 120, 0.2)',
     tspPathColor = '#ff691e',
+    displayTotalDistance = false,
+    displayCitiesCount = false,
+    displayMaxRoutesCount = false,
     className,
 }: Props) {
     const centerX = width / 2;
     const centerY = height / 2;
     const angleStep = (2 * Math.PI) / nodeCount;
 
-    const nodes: Node[] = React.useMemo(() =>
-        Array.from({ length: nodeCount }, (_, i) => ({
-            id: i + 1,
-            x: centerX + radius * Math.cos(i * angleStep),
-            y: centerY + radius * Math.sin(i * angleStep),
-        })
-    ), []);
+    const nodes: Node[] = React.useMemo(
+        () =>
+            Array.from({ length: nodeCount }, (_, i) => ({
+                id: i + 1,
+                x: centerX + radius * Math.cos(i * angleStep),
+                y: centerY + radius * Math.sin(i * angleStep),
+            })),
+        [angleStep, centerX, centerY, nodeCount, radius],
+    );
 
     const edges = React.useMemo(() => {
         const edgesList: [number, number][] = [];
@@ -55,24 +64,28 @@ function FixedGraphVisualizer({
             }
         }
         return edgesList;
-    }, []);
+    }, [nodeCount]);
 
     const [tspPath, setTspPath] = React.useState<Node[]>([]);
     const [opacity, setOpacity] = React.useState(0);
 
     React.useEffect(() => {
+        let timeout: ReturnType<typeof setTimeout>;
+
         const updateRoute = () => {
-            const ids = Array.from({ length: nodeCount }, (_, i) => i);
+            const ids = Array.from({ length: nodes.length }, (_, i) => i);
             setTspPath(shuffle(ids).map((i) => nodes[i]));
-            setOpacity(0);
-            setTimeout(() => setOpacity(1), 0);
-            setTimeout(() => setOpacity(0), animDurationMs - 500);
+            setOpacity(1);
+            timeout = setTimeout(() => setOpacity(0), animDurationMs - 500);
         };
 
         updateRoute();
         const interval = setInterval(updateRoute, animDurationMs);
-        return () => clearInterval(interval);
-    }, [nodeCount]);
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timeout);
+        };
+    }, [nodes, animDurationMs]);
 
     const totalDistance = React.useMemo(() => {
         if (tspPath.length < 2) return 0;
@@ -85,13 +98,17 @@ function FixedGraphVisualizer({
         return distance;
     }, [tspPath]);
 
+    const distanceTextY = displayTotalDistance ? height - 10 : height - 30;
+    const citiesCountTextY = displayCitiesCount
+        ? distanceTextY + 20
+        : distanceTextY;
+    const maxRoutesCountTextY = displayMaxRoutesCount
+        ? citiesCountTextY + 20
+        : citiesCountTextY;
+    const heightAddon = [displayTotalDistance, displayCitiesCount, displayMaxRoutesCount].filter(Boolean).length * 20;
 
     return (
-        <svg
-            width={width}
-            height={height}
-            className={className}
-        >
+        <svg width={width} height={height + heightAddon} className={className}>
             {/* Arrowhead definition */}
             <defs>
                 <marker
@@ -103,10 +120,7 @@ function FixedGraphVisualizer({
                     orient="auto"
                     markerUnits="strokeWidth"
                 >
-                    <polygon
-                        points="0 0, 10 3.5, 0 7"
-                        fill={edgeColor}
-                    />
+                    <polygon points="0 0, 10 3.5, 0 7" fill={edgeColor} />
                 </marker>
             </defs>
             {/* Directed edges */}
@@ -152,7 +166,10 @@ function FixedGraphVisualizer({
                             orient="auto"
                             markerUnits="strokeWidth"
                         >
-                            <polygon points="0 0, 10 3.5, 0 7" fill={tspPathColor} />
+                            <polygon
+                                points="0 0, 10 3.5, 0 7"
+                                fill={tspPathColor}
+                            />
                         </marker>
                     </defs>
                     {tspPath.map((from, i) => {
@@ -178,12 +195,15 @@ function FixedGraphVisualizer({
                                 stroke={tspPathColor}
                                 strokeWidth={2}
                                 markerEnd="url(#tspArrow)"
-                                style={{ opacity, transition: 'opacity 0.5s ease-in-out' }}
+                                style={{
+                                    opacity,
+                                    transition: 'opacity 0.5s ease-in-out',
+                                }}
                             />
                         );
                     })}
                 </>
-            )} 
+            )}
             {/* Nodes */}
             {nodes.map((node) => (
                 <g key={node.id}>
@@ -207,18 +227,46 @@ function FixedGraphVisualizer({
                     </text>
                 </g>
             ))}
-            <text
-                x={width / 2}
-                y={height - 16}
-                textAnchor="middle"
-                fontSize="16px"
-                fill="#333"
-                fontWeight="bold"
-            >
-                Total Distance: {totalDistance.toFixed(1)}
-            </text>
+            {displayTotalDistance && (
+                <text
+                    x={width / 2}
+                    y={distanceTextY}
+                    textAnchor="middle"
+                    fontSize="16px"
+                    fill="#333"
+                >
+                    <tspan>Total Distance: </tspan>
+                    <tspan fontWeight="bold">{totalDistance.toFixed(1)}</tspan>
+                </text>
+            )}
+            {displayCitiesCount && (
+                <text
+                    x={width / 2}
+                    y={citiesCountTextY}
+                    textAnchor="middle"
+                    fontSize="16px"
+                    fill="#333"
+                >
+                    <tspan>Cities Count: </tspan>
+                    <tspan fontWeight="bold">{nodeCount}</tspan>
+                </text>
+            )}
+            {displayMaxRoutesCount && (
+                <text
+                    x={width / 2}
+                    y={maxRoutesCountTextY}
+                    textAnchor="middle"
+                    fontSize="16px"
+                    fill="#333"
+                >
+                    <tspan>Max Routes Count: </tspan>
+                    <tspan fontWeight="bold">
+                        {formatScientificNotation(factorialApprox(nodeCount), { forceString: true })}
+                    </tspan>
+                </text>
+            )}
         </svg>
     );
-};
+}
 
-export default FixedGraphVisualizer;
+export default CompleteGraphVisualizer;

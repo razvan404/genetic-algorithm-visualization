@@ -59,7 +59,7 @@ function InfoSection({
                 {text}
             </span>
         );
-    }, [nextSectionText, nextSectionLink]);
+    }, [nextSectionText, nextSectionLink, navigate]);
 
     return (
         <div className={styles.container}>

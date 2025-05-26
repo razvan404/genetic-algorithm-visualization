@@ -1,18 +1,17 @@
 import React from 'react';
 import { InfoSection } from '@/core';
 
-import FixedGraphVisualizer from './fixedGraphVisualizer';
+import CompleteGraphVisualizer from './completeGraphVisualizer';
 import { Sections, Theme, getTitle } from './types';
-import styles from './styles/definitionSection.module.css';
 
 function DefinitionSection() {
     const description = React.useMemo(() => {
         return (
             <>
                 <p>
-                    The <strong>Traveling Salesman Problem (TSP)</strong> is a
-                    classic problem in the field of combinatorial optimization.
-                    It asks a deceptively simple question:
+                    The <strong>Traveling Salesman Problem</strong> is a classic
+                    problem in the field of combinatorial optimization. It asks
+                    a deceptively simple question:
                 </p>
                 <blockquote>
                     <em>
@@ -40,12 +39,12 @@ function DefinitionSection() {
 
     const figure = React.useMemo(() => {
         return (
-            <FixedGraphVisualizer
+            <CompleteGraphVisualizer
                 width={600}
                 height={600}
                 radius={250}
                 nodeCount={10}
-                className={styles.figure}
+                displayTotalDistance
             />
         );
     }, []);
