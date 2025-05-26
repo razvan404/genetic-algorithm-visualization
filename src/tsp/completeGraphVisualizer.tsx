@@ -105,14 +105,20 @@ function CompleteGraphVisualizer({
     const maxRoutesCountTextY = displayMaxRoutesCount
         ? citiesCountTextY + 20
         : citiesCountTextY;
-    const heightAddon = [displayTotalDistance, displayCitiesCount, displayMaxRoutesCount].filter(Boolean).length * 20;
+
+    const extraTextCount = [
+        displayTotalDistance,
+        displayCitiesCount,
+        displayMaxRoutesCount,
+    ].filter(Boolean).length;
+    const extraHeight = Math.max((extraTextCount - 1) * 20 - 5, 0);
 
     return (
-        <svg width={width} height={height + heightAddon} className={className}>
+        <svg width={width} height={height + extraHeight} className={className}>
             {/* Arrowhead definition */}
             <defs>
                 <marker
-                    id="arrowhead"
+                    id="completeArrowHead"
                     markerWidth="10"
                     markerHeight="7"
                     refX="10"
@@ -149,7 +155,7 @@ function CompleteGraphVisualizer({
                         y2={y2}
                         stroke={edgeColor}
                         strokeWidth={1}
-                        markerEnd="url(#arrowhead)"
+                        markerEnd="url(#completeArrowHead)"
                     />
                 );
             })}
@@ -158,7 +164,7 @@ function CompleteGraphVisualizer({
                 <>
                     <defs>
                         <marker
-                            id="tspArrow"
+                            id="completeTspArrow"
                             markerWidth="10"
                             markerHeight="7"
                             refX="10"
@@ -194,7 +200,7 @@ function CompleteGraphVisualizer({
                                 y2={y2}
                                 stroke={tspPathColor}
                                 strokeWidth={2}
-                                markerEnd="url(#tspArrow)"
+                                markerEnd="url(#completeTspArrow)"
                                 style={{
                                     opacity,
                                     transition: 'opacity 0.5s ease-in-out',
@@ -261,7 +267,9 @@ function CompleteGraphVisualizer({
                 >
                     <tspan>Max Routes Count: </tspan>
                     <tspan fontWeight="bold">
-                        {formatScientificNotation(factorialApprox(nodeCount), { forceString: true })}
+                        {formatScientificNotation(factorialApprox(nodeCount), {
+                            forceString: true,
+                        })}
                     </tspan>
                 </text>
             )}

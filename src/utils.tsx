@@ -22,12 +22,13 @@ export function factorialApprox(n: number): number {
 }
 
 type FormatScientificNotationOptions = {
-    forceString?: boolean,
-}
+    forceString?: boolean;
+};
 
-export function formatScientificNotation(num: number, {
-    forceString = false,
-}: FormatScientificNotationOptions = {}): React.ReactNode | string {
+export function formatScientificNotation(
+    num: number,
+    { forceString = false }: FormatScientificNotationOptions = {},
+): React.ReactNode | string {
     if (num < 1e6) {
         return Math.round(num).toLocaleString();
     }
