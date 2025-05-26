@@ -16,10 +16,20 @@ function Sections({ sections }: Props) {
     const sectionRefs = React.useRef<Record<string, HTMLElement | null>>({});
 
     React.useEffect(() => {
-        const handleScroll = () => {
-            const container = containerRef.current;
-            if (!container) return;
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
 
+        if (window.location.hash) {
+            const targetId = window.location.hash.substring(1);
+            const targetElement = sectionRefs.current[targetId];
+            if (targetElement) {
+                container.scrollTop = targetElement.offsetTop;
+            }
+        }
+
+        const handleScroll = () => {
             const scrollTop = container.scrollTop;
 
             let closestSectionId = '';
@@ -45,11 +55,10 @@ function Sections({ sections }: Props) {
         };
 
         handleScroll();
-        const container = containerRef.current;
-        container?.addEventListener('scroll', handleScroll);
+        container.addEventListener('scroll', handleScroll);
 
         return () => {
-            container?.removeEventListener('scroll', handleScroll);
+            container.removeEventListener('scroll', handleScroll);
         };
     }, [sections]);
 
