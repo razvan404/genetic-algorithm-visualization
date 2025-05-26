@@ -4,7 +4,6 @@ import introSection from './introSection';
 import definitionSection from './definitionSection';
 import complexitySection from './complexitySection';
 import applicationsSection from './applicationsSection';
-import { Theme } from './types';
 
 function TspPage() {
     const sections = [
@@ -15,7 +14,12 @@ function TspPage() {
     ];
 
     return (
-        <Overlay backgroundColor={Theme.HEADER_COLOR}>
+        <Overlay
+            theme={{
+                backgroundColor: '#FFFED1',
+                headerColor: 'rgba(253, 249, 128, 0.4)',
+            }}
+        >
             <Sections sections={sections} />
         </Overlay>
     );

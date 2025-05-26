@@ -2,7 +2,7 @@ import React from 'react';
 import { InfoSection } from '@/core';
 
 import CompleteGraphVisualizer from './completeGraphVisualizer';
-import { Sections, Theme, getTitle } from './types';
+import { Sections, getTitle } from './sections';
 
 function DefinitionSection() {
     const description = React.useMemo(() => {
@@ -54,7 +54,6 @@ function DefinitionSection() {
             title={getTitle(Sections.DEFINITION)}
             description={description}
             figure={figure}
-            backgroundColor={Theme.BACKGROUND_COLOR}
             nextSectionText={getTitle(Sections.COMPLEXITY)}
             nextSectionLink={`#${Sections.COMPLEXITY}`}
         />

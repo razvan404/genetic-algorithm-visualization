@@ -2,9 +2,9 @@ import React from 'react';
 
 import tspApplications from '@/assets/tspApplications.png';
 import { InfoSection } from '@/core';
-import Routes from '@/routes';
+import Pages, { getRoute, getTitle as getChapterTitle } from '@/pages';
 
-import { Sections, Theme, getTitle } from './types';
+import { Sections, getTitle } from './sections';
 
 function ApplicationsSection() {
     const description = React.useMemo(
@@ -55,18 +55,24 @@ function ApplicationsSection() {
         [],
     );
 
-    const figure = React.useMemo(() => (
-        <img src={tspApplications} alt="TSP Applications" style={{ width: 600 }} />
-    ), []);
+    const figure = React.useMemo(
+        () => (
+            <img
+                src={tspApplications}
+                alt="TSP Applications"
+                style={{ width: 600 }}
+            />
+        ),
+        [],
+    );
 
     return (
         <InfoSection
             title={getTitle(Sections.APPLICATIONS)}
             description={description}
             figure={figure}
-            backgroundColor={Theme.BACKGROUND_COLOR}
-            nextSectionText={'Genetic Algorithm Overview'}
-            nextSectionLink={Routes.OVERVIEW}
+            nextSectionText={getChapterTitle(Pages.OVERVIEW)}
+            nextSectionLink={getRoute(Pages.OVERVIEW)}
         />
     );
 }

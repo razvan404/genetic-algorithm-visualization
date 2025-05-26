@@ -1,4 +1,4 @@
-import Routes from '@/routes';
+import Pages, { getTitle, getRoute } from '@/pages';
 
 import styles from './styles/header.module.css';
 
@@ -6,21 +6,21 @@ type Props = {
     backgroundColor?: string;
 };
 
-const navLinks = [
-    { href: Routes.TSP, label: 'Traveling Salesman Problem' },
-    { href: Routes.OVERVIEW, label: 'Genetic Algorithm Overview' },
-    { href: Routes.FITNESS, label: 'Fitness Function' },
-    { href: Routes.CROSSOVER, label: 'Crossover' },
-    { href: Routes.MUTATION, label: 'Mutation' },
-    { href: Routes.ALGORITHM, label: 'Genetic Algorithm in Action' },
-];
+const navLinks = Object.values(Pages)
+    .filter((page) => page !== Pages.HOME)
+    .map((page) => ({
+        href: getRoute(page),
+        label: getTitle(page),
+    }));
 
 function Header({ backgroundColor }: Props) {
     return (
         <header className={styles.header} style={{ backgroundColor }}>
             <nav className={styles.nav}>
                 <h1 className={styles.navTitle}>
-                    <a href={Routes.HOME}>Genetic Algorithm Visualization</a>
+                    <a href={getRoute(Pages.HOME)}>
+                        Genetic Algorithm Visualization
+                    </a>
                 </h1>
                 <ul className={styles.navList}>
                     {navLinks.map((link) => (

@@ -1,6 +1,6 @@
 import { IntroSection } from '@/core';
 
-import { Sections, Theme } from './types';
+import { Sections } from './sections';
 
 function TspIntroSection() {
     return (
@@ -25,7 +25,6 @@ function TspIntroSection() {
                     figure: '/vite.svg',
                 },
             ]}
-            backgroundColor={Theme.BACKGROUND_COLOR}
         />
     );
 }

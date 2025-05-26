@@ -1,3 +1,7 @@
+import React from 'react';
+
+import ThemeContext from '../theme';
+
 import { scrollToSection } from './utils';
 import styles from './styles/introSection.module.css';
 
@@ -12,16 +16,11 @@ type Props = {
     title: string;
     description: string;
     subsections: SubsectionProps[];
-    backgroundColor?: string;
 };
 
-function IntroSection({
-    chapter,
-    title,
-    description,
-    subsections,
-    backgroundColor,
-}: Props) {
+function IntroSection({ chapter, title, description, subsections }: Props) {
+    const { backgroundColor } = React.useContext(ThemeContext);
+
     return (
         <div className={styles.container} style={{ backgroundColor }}>
             <div className={styles.chapterDetails}>

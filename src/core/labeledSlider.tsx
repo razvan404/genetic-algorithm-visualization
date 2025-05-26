@@ -16,9 +16,9 @@ function LabeledSlider({ value, onChange, min = 3, max = 64, label }: Props) {
     return (
         <div className={styles.sliderTrack}>
             {label && (
-                <p style={{ margin: 0 }}>
+                <span style={{ margin: 0 }}>
                     {label} count (<strong>{value}</strong>):
-                </p>
+                </span>
             )}
             <span className={styles.minLabel}>{min}</span>
             <div className={styles.rangeWrapper}>

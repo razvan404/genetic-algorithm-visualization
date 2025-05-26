@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import ThemeContext from '../theme';
+
 import styles from './styles/infoSection.module.css';
 import { scrollToSection } from './utils';
 
@@ -8,7 +10,6 @@ type Props = {
     title: string;
     description: React.ReactNode;
     figure: React.ReactNode;
-    backgroundColor?: string;
 
     nextSectionText?: React.ReactNode;
     nextSectionLink?: string;
@@ -18,10 +19,10 @@ function InfoSection({
     title,
     description,
     figure,
-    backgroundColor,
     nextSectionText,
     nextSectionLink,
 }: Props) {
+    const { backgroundColor } = React.useContext(ThemeContext);
     const navigate = useNavigate();
 
     const nextSection = React.useMemo(() => {
@@ -65,7 +66,7 @@ function InfoSection({
         <div className={styles.container}>
             <div className={styles.textContainer} style={{ backgroundColor }}>
                 <h2 className={styles.title}>{title}</h2>
-                <p className={styles.description}>{description}</p>
+                <div className={styles.description}>{description}</div>
                 {nextSection}
             </div>
             <div className={styles.figureContainer}>{figure}</div>

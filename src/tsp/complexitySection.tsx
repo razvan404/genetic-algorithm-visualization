@@ -4,7 +4,7 @@ import { InfoSection, LabeledSlider } from '@/core';
 import { formatScientificNotation, factorialApprox } from '@/utils';
 
 import CompleteGraphVisualizer from './completeGraphVisualizer';
-import { Sections, Theme, getTitle } from './types';
+import { Sections, getTitle } from './sections';
 
 function ComplexitySection() {
     const [nodeCount, setNodeCount] = React.useState(10);
@@ -35,7 +35,7 @@ function ComplexitySection() {
                     This factorial growth becomes computationally infeasible
                     very quickly. For example, for <strong>{nodeCount}</strong>{' '}
                     cities, there are at most <strong>{routesCount}</strong>{' '}
-                    possible routes.
+                    routes.
                 </p>
 
                 <LabeledSlider
@@ -88,7 +88,6 @@ function ComplexitySection() {
             title={getTitle(Sections.COMPLEXITY)}
             description={description}
             figure={figure}
-            backgroundColor={Theme.BACKGROUND_COLOR}
             nextSectionText={getTitle(Sections.APPLICATIONS)}
             nextSectionLink={`#${Sections.APPLICATIONS}`}
         />

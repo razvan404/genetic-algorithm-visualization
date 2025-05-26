@@ -1,19 +1,20 @@
 import Header from './header';
 import Footer from './footer';
+import ThemeContext, { type Theme } from './theme';
 import styles from './styles/overlay.module.css';
 
 type Props = {
     children: React.ReactNode;
-    backgroundColor?: string;
+    theme: Theme;
 };
 
-function Overlay({ children, backgroundColor }: Props) {
+function Overlay({ children, theme }: Props) {
     return (
-        <>
-            <Header backgroundColor={backgroundColor} />
+        <ThemeContext.Provider value={theme}>
+            <Header backgroundColor={theme.headerColor} />
             <div className={styles.container}>{children}</div>
-            <Footer backgroundColor={backgroundColor} />
-        </>
+            <Footer backgroundColor={theme.headerColor} />
+        </ThemeContext.Provider>
     );
 }
 
