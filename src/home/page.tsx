@@ -4,7 +4,7 @@ import Home from './home';
 
 function Page() {
     return (
-        <Overlay theme={{ backgroundColor: 'rgba(72, 108, 156, 0.3)' }}>
+        <Overlay theme={{ headerColor: 'rgba(72, 108, 156, 0.3)' }}>
             <Home />
         </Overlay>
     );

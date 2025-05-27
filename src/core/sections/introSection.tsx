@@ -14,7 +14,7 @@ type SubsectionProps = {
 type Props = {
     chapter: number;
     title: string;
-    description: string;
+    description: React.ReactNode;
     subsections: SubsectionProps[];
 };
 
@@ -24,9 +24,9 @@ function IntroSection({ chapter, title, description, subsections }: Props) {
     return (
         <div className={styles.container} style={{ backgroundColor }}>
             <div className={styles.chapterDetails}>
-                <h2 className={styles.chapterTitle}>Chapter {chapter}</h2>
-                <h1 className={styles.title}>{title}</h1>
-                <p className={styles.description}>{description}</p>
+                <h2>Chapter {chapter}</h2>
+                <h1>{title}</h1>
+                {description}
             </div>
             <ul className={styles.subsections}>
                 {subsections.map((subsection) => (

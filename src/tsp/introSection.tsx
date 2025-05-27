@@ -1,30 +1,34 @@
+import React from 'react';
+
 import { IntroSection } from '@/core';
 
-import { Sections } from './sections';
+import { Sections, getTitle } from './sections';
 
 function TspIntroSection() {
+    const description = React.useMemo(
+        () => (
+            <p>
+                The <strong>Traveling Salesman Problem (TSP)</strong> is a
+                classic optimization problem in computer science and operations
+                research. It involves finding the shortest possible route that
+                visits a set of cities and returns to the origin city.
+            </p>
+        ),
+        [],
+    );
+
     return (
         <IntroSection
             chapter={1}
-            title="Traveling Salesman Problem"
-            description="The Traveling Salesman Problem (TSP) is a classic optimization problem in computer science and operations research. It involves finding the shortest possible route that visits a set of cities and returns to the origin city."
-            subsections={[
-                {
-                    id: Sections.DEFINITION,
-                    title: 'Problem Definition',
-                    figure: '/vite.svg',
-                },
-                {
-                    id: Sections.COMPLEXITY,
-                    title: 'Problem Complexity',
-                    figure: '/vite.svg',
-                },
-                {
-                    id: Sections.APPLICATIONS,
-                    title: 'Applications',
-                    figure: '/vite.svg',
-                },
-            ]}
+            title={getTitle(Sections.INTRO)}
+            description={description}
+            subsections={Object.values(Sections)
+                .filter((section) => section !== Sections.INTRO)
+                .map((section) => ({
+                    id: section,
+                    title: getTitle(section),
+                    figure: `/vite.svg`,
+                }))}
         />
     );
 }
