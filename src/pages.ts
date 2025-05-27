@@ -2,8 +2,7 @@ const Pages = {
     HOME: 'home',
     TSP: 'tsp',
     OVERVIEW: 'overview',
-    DIVERSITY: 'diversity',
-    VARIATIONS: 'variations',
+    VARIATION: 'variation',
     ALGORITHM: 'algorithm',
 } as const;
 
@@ -17,10 +16,8 @@ export const getRoute = (page: Values<typeof Pages>): string => {
             return '/tsp';
         case Pages.OVERVIEW:
             return '/overview';
-        case Pages.DIVERSITY:
-            return '/diversity';
-        case Pages.VARIATIONS:
-            return '/variations';
+        case Pages.VARIATION:
+            return '/variation';
         case Pages.ALGORITHM:
             return '/algorithm';
         default:
@@ -36,10 +33,8 @@ export const getTitle = (page: Values<typeof Pages>): string => {
             return 'Traveling Salesman Problem';
         case Pages.OVERVIEW:
             return 'Overview';
-        case Pages.DIVERSITY:
-            return 'Population Diversity';
-        case Pages.VARIATIONS:
-            return 'Genetic Variation';
+        case Pages.VARIATION:
+            return 'Population Variation';
         case Pages.ALGORITHM:
             return 'Algorithm';
         default:
