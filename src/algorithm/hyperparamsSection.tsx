@@ -91,41 +91,64 @@ function HyperparamsSection() {
     );
 
     const figure = (
-        <div style={{ width: '60%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div
+            style={{
+                width: '60%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+            }}
+        >
             <LabeledSlider
                 label="Population"
                 min={10}
                 max={200}
                 value={hyperparams.populationSize}
-                onChange={(val) => setHyperparams((prev) => ({ ...prev, populationSize: val }))}
+                onChange={(val) =>
+                    setHyperparams((prev) => ({ ...prev, populationSize: val }))
+                }
             />
             <LabeledSlider
                 label="Mutation Rate (%)"
                 min={0}
                 max={100}
                 value={Math.round(hyperparams.mutationRate * 100)}
-                onChange={(val) => setHyperparams((prev) => ({ ...prev, mutationRate: val / 100 }))}
+                onChange={(val) =>
+                    setHyperparams((prev) => ({
+                        ...prev,
+                        mutationRate: val / 100,
+                    }))
+                }
             />
             <LabeledSlider
                 label="Crossover Rate (%)"
                 min={0}
                 max={100}
                 value={Math.round(hyperparams.crossoverRate * 100)}
-                onChange={(val) => setHyperparams((prev) => ({ ...prev, crossoverRate: val / 100 }))}
+                onChange={(val) =>
+                    setHyperparams((prev) => ({
+                        ...prev,
+                        crossoverRate: val / 100,
+                    }))
+                }
             />
             <LabeledSlider
                 label="Elitism Count"
                 min={0}
                 max={20}
                 value={hyperparams.elitismCount}
-                onChange={(val) => setHyperparams((prev) => ({ ...prev, elitismCount: val }))}
+                onChange={(val) =>
+                    setHyperparams((prev) => ({ ...prev, elitismCount: val }))
+                }
             />
             <LabeledSlider
                 label="Max Generations"
                 min={10}
                 max={1000}
                 value={hyperparams.maxGenerations}
-                onChange={(val) => setHyperparams((prev) => ({ ...prev, maxGenerations: val }))}
+                onChange={(val) =>
+                    setHyperparams((prev) => ({ ...prev, maxGenerations: val }))
+                }
             />
         </div>
     );

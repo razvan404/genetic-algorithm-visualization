@@ -106,12 +106,12 @@ function TSPVisualizer({
             },
         });
         return () => {
-          fitnessPlotRef.current?.clear();
-          if (ga.current) {
-              ga.current.stop();
-              ga.current = null;
-          }
-        }
+            fitnessPlotRef.current?.clear();
+            if (ga.current) {
+                ga.current.stop();
+                ga.current = null;
+            }
+        };
     }, [populationSize, mutationRate, crossoverRate, elitismCount, finished]);
 
     React.useEffect(() => {

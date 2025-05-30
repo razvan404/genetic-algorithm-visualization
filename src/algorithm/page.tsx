@@ -3,7 +3,11 @@ import React from 'react';
 import { Overlay, Sections } from '@/core';
 
 import introSection from './introSection';
-import hyperparamsSection, { type Hyperparams, HyperparamContext, defaultParams} from './hyperparamsSection';
+import hyperparamsSection, {
+    type Hyperparams,
+    HyperparamContext,
+    defaultParams,
+} from './hyperparamsSection';
 import visualizationSection from './visualizationSection';
 
 function AlgorithmPage() {

@@ -11,7 +11,14 @@ type Props = {
     label?: string;
 };
 
-function LabeledSlider({ value, onChange, min = 3, max = 64, step = 1, label }: Props) {
+function LabeledSlider({
+    value,
+    onChange,
+    min = 3,
+    max = 64,
+    step = 1,
+    label,
+}: Props) {
     const [showTooltip, setShowTooltip] = React.useState(false);
 
     return (

@@ -17,7 +17,6 @@ function VisualizationSection() {
         setFinished(false);
     }, [hyperparams]);
 
-
     const description = React.useMemo(() => {
         let buttonText = 'Start simulation';
         if (finished) {
@@ -62,10 +61,8 @@ function VisualizationSection() {
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}
-                        >
-                            <h2>
-                                Simulation not started
-                            </h2>
+                    >
+                        <h2>Simulation not started</h2>
                     </div>
                 )}
                 <TSPVisualizer
