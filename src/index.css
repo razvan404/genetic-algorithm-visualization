@@ -70,3 +70,19 @@ button:focus-visible {
 #root {
     width: 100%;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table th {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 2px solid #ccc;
+}
+
+table td {
+    padding: 6px;
+}

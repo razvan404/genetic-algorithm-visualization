@@ -49,30 +49,33 @@ function RepresentationSection() {
     );
 
     const figure = React.useMemo(() => {
+        const commonProps = {
+            width: 400,
+            height: 400,
+            radius: 175,
+            nodeCount: 8,
+            tspPathColor: '#FFDE72',
+            displayCurrentChromosome: true,
+            displayReloadRoute: true,
+        };
         return (
-            <div style={{ display: 'flex', gap: '20px' }}>
+            <div
+                style={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-around',
+                }}
+            >
                 <RoundGraphVisualizer
                     title="Chromosomes in a Complete Graph"
                     subtitle="there are not invalid connections"
-                    width={350}
-                    height={350}
-                    radius={150}
-                    nodeCount={8}
-                    tspPathColor="#FFDE72"
-                    displayCurrentChromosome
-                    displayReloadRoute
+                    {...commonProps}
                 />
                 <RoundGraphVisualizer
                     title="Chromosomes in a Partial Graph"
                     subtitle="red edges represent invalid connections"
-                    width={350}
-                    height={350}
-                    radius={150}
-                    nodeCount={8}
-                    tspPathColor="#FFDE72"
                     edgeProbability={0.7}
-                    displayCurrentChromosome
-                    displayReloadRoute
+                    {...commonProps}
                 />
             </div>
         );

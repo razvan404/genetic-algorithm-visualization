@@ -4,7 +4,6 @@ import { InfoSection } from '@/core';
 import gaOverview from '@/assets/gaOverview.png';
 
 import { Sections, getTitle } from './sections';
-import styles from './styles/pipelineSection.module.css';
 
 function PipelineSection() {
     const description = React.useMemo(
@@ -27,7 +26,7 @@ function PipelineSection() {
                     the total distance traveled.
                 </p>
 
-                <table className={styles.table}>
+                <table>
                     <thead>
                         <tr>
                             <th>Step</th>
@@ -113,7 +112,7 @@ function PipelineSection() {
                 <img
                     src={gaOverview}
                     alt="Genetic Algorithm Overview"
-                    className={styles.figure}
+                    style={{ height: '600px' }}
                 />
                 <p>
                     Source:{' '}
