@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import ThemeContext from '../theme';
 
-import styles from './styles/infoSection.module.css';
 import { scrollToSection } from './utils';
+import styles from './styles/infoSection.module.css';
 
 type Props = {
     title: string;

@@ -1,8 +1,8 @@
 export const Sections = {
     INTRO: 'intro',
     OVERVIEW: 'overview',
+    REPRESENTATION: 'representation',
     FITNESS: 'fitness',
-    SELECTION: 'selection',
 };
 
 export function getTitle(title: Values<typeof Sections>) {
@@ -11,10 +11,10 @@ export function getTitle(title: Values<typeof Sections>) {
             return 'Genetic Algorithm Overview';
         case Sections.OVERVIEW:
             return 'Method Overview';
+        case Sections.REPRESENTATION:
+            return 'Chromosomes Representation';
         case Sections.FITNESS:
             return 'Fitness Function';
-        case Sections.SELECTION:
-            return 'Selection Process';
         default:
             throw new Error(`Unknown section title: ${title}`);
     }

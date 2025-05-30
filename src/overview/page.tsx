@@ -1,9 +1,17 @@
 import { Overlay, Sections } from '@/core';
 
 import introSection from './introSection';
+import overviewSection from './overviewSection';
+import representationSection from './representationSection';
+import fitnessSection from './fitnessSection';
 
 function OverviewPage() {
-    const sections = [introSection];
+    const sections = [
+        introSection,
+        overviewSection,
+        representationSection,
+        fitnessSection,
+    ];
 
     return (
         <Overlay
