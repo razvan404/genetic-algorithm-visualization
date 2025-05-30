@@ -54,22 +54,22 @@ function RepresentationSection() {
                 <RoundGraphVisualizer
                     title="Chromosomes in a Complete Graph"
                     subtitle="there are not invalid connections"
-                    width={400}
-                    height={400}
+                    width={350}
+                    height={350}
                     radius={150}
                     nodeCount={8}
-                    tspPathColor='#FFDE72'
+                    tspPathColor="#FFDE72"
                     displayCurrentChromosome
                     displayReloadRoute
                 />
                 <RoundGraphVisualizer
                     title="Chromosomes in a Partial Graph"
                     subtitle="red edges represent invalid connections"
-                    width={400}
-                    height={400}
+                    width={350}
+                    height={350}
                     radius={150}
                     nodeCount={8}
-                    tspPathColor='#FFDE72'
+                    tspPathColor="#FFDE72"
                     edgeProbability={0.7}
                     displayCurrentChromosome
                     displayReloadRoute

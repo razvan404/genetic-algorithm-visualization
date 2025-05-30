@@ -16,6 +16,7 @@ type Props = {
     width?: number;
     height?: number;
     animDurationMs?: number | null;
+    animFadeMs?: number;
     nodeSize?: number;
     edgeProbability?: number;
     nodeColor?: string;
@@ -24,9 +25,12 @@ type Props = {
     invalidEdgeColor?: string;
     displayTotalDistance?: boolean;
     displayCitiesCount?: boolean;
+    displayFitnessScore?: boolean;
     displayMaxRoutesCount?: boolean;
     displayReloadRoute?: boolean;
+    displayReloadRoute50Times?: boolean;
     displayCurrentChromosome?: boolean;
+    onTspPathUpdate?: (path: Node[], distance: number, fitness: number) => void;
     className?: string;
 };
 
@@ -38,6 +42,7 @@ function RoundGraphVisualizer({
     width = 400,
     height = 400,
     animDurationMs = null,
+    animFadeMs = 300,
     nodeSize = 16,
     edgeProbability = 1,
     nodeColor = '#FFCA66',
@@ -46,9 +51,12 @@ function RoundGraphVisualizer({
     tspPathColor = '#FFAE42',
     displayTotalDistance = false,
     displayCitiesCount = false,
+    displayFitnessScore = false,
     displayMaxRoutesCount = false,
     displayReloadRoute = false,
     displayCurrentChromosome = false,
+    displayReloadRoute50Times = false,
+    onTspPathUpdate,
     className,
 }: Props) {
     const centerX = width / 2;
@@ -88,11 +96,14 @@ function RoundGraphVisualizer({
 
             let timeout: ReturnType<typeof setTimeout> | null = null;
             if (duration) {
-                timeout = setTimeout(() => setOpacity(0), duration - 300);
+                timeout = setTimeout(
+                    () => setOpacity(0),
+                    duration - animFadeMs,
+                );
             }
             return timeout;
         },
-        [nodes],
+        [nodes, animFadeMs],
     );
 
     React.useEffect(() => {
@@ -124,10 +135,45 @@ function RoundGraphVisualizer({
         return distance;
     }, [tspPath]);
 
+    const fitness = React.useMemo(() => {
+        if (tspPath.length < 2) {
+            return { score: 0, invalidEdges: 0 };
+        }
+        let distance = 0,
+            invalidEdges = 0;
+        for (let i = 0; i < tspPath.length; i++) {
+            const from = tspPath[i];
+            const to = tspPath[(i + 1) % tspPath.length];
+            if (
+                !edges.some(
+                    ([edgeFrom, edgeTo]) =>
+                        edgeFrom === from.id - 1 && edgeTo === to.id - 1,
+                )
+            ) {
+                distance += 10000;
+                invalidEdges += 1;
+            } else {
+                distance += Math.hypot(to.x - from.x, to.y - from.y);
+            }
+        }
+        return { score: 1e5 / distance, invalidEdges };
+    }, [tspPath, edges]);
+
+    React.useEffect(() => {
+        onTspPathUpdate?.(tspPath, totalDistance, fitness.score);
+    }, [tspPath, totalDistance, fitness, onTspPathUpdate]);
+
     return (
-        <div className={className} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div
+            className={className}
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
             {title && (
-                <h3 style={{marginTop: 0, marginBottom: 5}}>{title}</h3>
+                <h3 style={{ marginTop: 0, marginBottom: 5 }}>{title}</h3>
             )}
             {subtitle && (
                 <p style={{ marginTop: 0, marginBottom: 5 }}>
@@ -245,7 +291,7 @@ function RoundGraphVisualizer({
                                             ? tspPathColor
                                             : invalidEdgeColor
                                     }
-                                    strokeWidth={isEdgeValid ? "0.5%" : "0.3%"}
+                                    strokeWidth={isEdgeValid ? '0.5%' : '0.3%'}
                                     markerEnd={
                                         isEdgeValid
                                             ? 'url(#tspValidArrow)'
@@ -253,7 +299,7 @@ function RoundGraphVisualizer({
                                     }
                                     style={{
                                         opacity,
-                                        transition: 'opacity 0.3s ease-in-out',
+                                        transition: `opacity ${animFadeMs}ms ease-in-out`,
                                     }}
                                 />
                             );
@@ -294,6 +340,22 @@ function RoundGraphVisualizer({
                 >
                     Total distance: <strong>{totalDistance.toFixed(2)}</strong>{' '}
                     units.
+                </p>
+            )}
+            {displayFitnessScore && (
+                <p
+                    style={{
+                        textAlign: 'center',
+                        marginTop: 0,
+                        marginBottom: 5,
+                    }}
+                >
+                    Fitness score:{' '}
+                    <strong>
+                        {fitness.score.toFixed(4)} (invalid edges:{' '}
+                        {fitness.invalidEdges})
+                    </strong>
+                    .
                 </p>
             )}
             {displayCitiesCount && (
@@ -357,8 +419,40 @@ function RoundGraphVisualizer({
                 </div>
             )}
             {displayReloadRoute && (
-                <button style={{ width: width / 2, marginTop: 10, marginBottom: 5, border: "#ccc 1px solid" }} onClick={() => updateRoute()}>
-                    Reload route
+                <button
+                    style={{
+                        width: width / 2,
+                        marginTop: 10,
+                        marginBottom: 5,
+                        border: '#ccc 1px solid',
+                    }}
+                    onClick={() => updateRoute()}
+                >
+                    Reload route 1 time
+                </button>
+            )}
+            {displayReloadRoute50Times && (
+                <button
+                    style={{
+                        width: width / 2,
+                        marginTop: 10,
+                        marginBottom: 5,
+                        border: '#ccc 1px solid',
+                    }}
+                    onClick={() => {
+                        let idx = 0;
+                        const interval = setInterval(() => {
+                            if (idx <= 49) {
+                                updateRoute(animFadeMs * 2);
+                                idx += 1;
+                                return;
+                            }
+                            updateRoute();
+                            clearInterval(interval);
+                        }, animFadeMs * 2);
+                    }}
+                >
+                    Reload route 50 times
                 </button>
             )}
         </div>

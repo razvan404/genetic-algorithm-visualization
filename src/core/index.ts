@@ -5,3 +5,4 @@ export { Sections, IntroSection, InfoSection } from './sections';
 export { default as LabeledSlider } from './labeledSlider';
 export { default as ThemeContext } from './theme';
 export { default as RoundGraphVisualizer } from './roundGraphVisualizer';
+export { default as Histogram } from './histogram';
