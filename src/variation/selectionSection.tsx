@@ -1,8 +1,34 @@
 import React from 'react';
+import {
+    ResponsiveContainer,
+    PieChart,
+    Pie,
+    Cell,
+    Tooltip,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    LineChart,
+    Line,
+    Legend,
+} from 'recharts';
 
 import { InfoSection } from '@/core';
 
 import { Sections, getTitle } from './sections';
+
+function generateFitnessData(count = 100, min = 50, max = 150) {
+    const data: { id: string; fitness: number }[] = [];
+    for (let i = 0; i < count; i++) {
+        const value = Math.floor(Math.random() * (max - min + 1)) + min;
+        data.push({ id: `${i}`, fitness: value });
+    }
+    return data;
+}
+
+const fitnessData = generateFitnessData(20, 10, 120);
 
 function SelectionSection() {
     const description = React.useMemo(
@@ -61,7 +87,94 @@ function SelectionSection() {
     );
 
     const figure = React.useMemo(() => {
-        return null;
+        const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+        return (
+            <div style={{ display: 'grid', gap: '2rem' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                        alignItems: 'center',
+                    }}
+                >
+                    <h4>Roulette Wheel Selection (Fitness Proportions)</h4>
+                    <ResponsiveContainer width="100%" height={200}>
+                        <PieChart>
+                            <Pie
+                                data={fitnessData}
+                                dataKey="fitness"
+                                nameKey="id"
+                                outerRadius={60}
+                                label
+                            >
+                                {fitnessData.map((_, index) => (
+                                    <Cell
+                                        key={index}
+                                        fill={COLORS[index % COLORS.length]}
+                                    />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                        alignItems: 'center',
+                    }}
+                >
+                    <h4>Tournament Winners</h4>
+                    <ResponsiveContainer width="100%" height={200}>
+                        <BarChart
+                            data={fitnessData.filter(
+                                (_, index) => index % 5 === 0,
+                            )}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="id" />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="fitness" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                        alignItems: 'center',
+                    }}
+                >
+                    <h4>Rank Selection</h4>
+                    <ResponsiveContainer width="100%" height={200}>
+                        <LineChart
+                            data={[...fitnessData]
+                                .sort((a, b) => a.fitness - b.fitness)
+                                .reverse()}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="id" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line
+                                type="monotone"
+                                dataKey="fitness"
+                                stroke="#82ca9d"
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        );
     }, []);
 
     return (
