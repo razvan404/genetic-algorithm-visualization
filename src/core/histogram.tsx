@@ -13,6 +13,8 @@ type Props = {
     width?: string | number;
     height?: string | number;
     color?: string;
+    labelX?: string;
+    labelY?: string;
 };
 
 function Histogram({
@@ -21,6 +23,8 @@ function Histogram({
     width = '100%',
     height = 300,
     color = '#8884d8',
+    labelX,
+    labelY,
 }: Props) {
     if (data.length < 1) {
         return (
@@ -66,8 +70,22 @@ function Histogram({
     return (
         <ResponsiveContainer width={width} height={height}>
             <BarChart data={bins}>
-                <XAxis dataKey="bin" />
-                <YAxis />
+                <XAxis
+                    dataKey="bin"
+                    label={{
+                        value: labelX,
+                        position: 'insideBottom',
+                        offset: -5,
+                    }}
+                />
+                <YAxis
+                    label={{
+                        value: labelY,
+                        angle: -90,
+                        position: 'insideLeft',
+                        offset: 25,
+                    }}
+                />
                 <Tooltip />
                 <Bar dataKey="count" fill={color} />
             </BarChart>

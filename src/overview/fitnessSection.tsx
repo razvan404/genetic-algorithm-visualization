@@ -47,7 +47,12 @@ function FitnessSection() {
                     samples.
                 </p>
 
-                <Histogram data={fitnessHistory} binSize={2} />
+                <Histogram
+                    data={fitnessHistory}
+                    binSize={2}
+                    labelX={'Fitness Score'}
+                    labelY={'Count'}
+                />
             </>
         ),
         [fitnessHistory],
