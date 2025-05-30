@@ -1,10 +1,33 @@
 import React from 'react';
 
-import { InfoSection } from '@/core';
+import { InfoSection, LabeledSlider } from '@/core';
 
 import { Sections, getTitle } from './sections';
 
+export type Hyperparams = {
+    populationSize: number;
+    mutationRate: number;
+    crossoverRate: number;
+    elitismCount: number;
+    maxGenerations: number;
+};
+
+export const defaultParams: Hyperparams = {
+    populationSize: 100,
+    mutationRate: 0.02,
+    crossoverRate: 0.7,
+    elitismCount: 2,
+    maxGenerations: 500,
+};
+
+export const HyperparamContext = React.createContext<{
+    hyperparams: Hyperparams;
+    setHyperparams: React.Dispatch<React.SetStateAction<Hyperparams>>;
+}>({ hyperparams: defaultParams, setHyperparams: () => {} });
+
 function HyperparamsSection() {
+    const { hyperparams, setHyperparams } = React.useContext(HyperparamContext);
+
     const description = React.useMemo(
         () => (
             <>
@@ -67,9 +90,45 @@ function HyperparamsSection() {
         [],
     );
 
-    const figure = React.useMemo(() => {
-        return null;
-    }, []);
+    const figure = (
+        <div style={{ width: '60%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <LabeledSlider
+                label="Population"
+                min={10}
+                max={200}
+                value={hyperparams.populationSize}
+                onChange={(val) => setHyperparams((prev) => ({ ...prev, populationSize: val }))}
+            />
+            <LabeledSlider
+                label="Mutation Rate (%)"
+                min={0}
+                max={100}
+                value={Math.round(hyperparams.mutationRate * 100)}
+                onChange={(val) => setHyperparams((prev) => ({ ...prev, mutationRate: val / 100 }))}
+            />
+            <LabeledSlider
+                label="Crossover Rate (%)"
+                min={0}
+                max={100}
+                value={Math.round(hyperparams.crossoverRate * 100)}
+                onChange={(val) => setHyperparams((prev) => ({ ...prev, crossoverRate: val / 100 }))}
+            />
+            <LabeledSlider
+                label="Elitism Count"
+                min={0}
+                max={20}
+                value={hyperparams.elitismCount}
+                onChange={(val) => setHyperparams((prev) => ({ ...prev, elitismCount: val }))}
+            />
+            <LabeledSlider
+                label="Max Generations"
+                min={10}
+                max={1000}
+                value={hyperparams.maxGenerations}
+                onChange={(val) => setHyperparams((prev) => ({ ...prev, maxGenerations: val }))}
+            />
+        </div>
+    );
 
     return (
         <InfoSection

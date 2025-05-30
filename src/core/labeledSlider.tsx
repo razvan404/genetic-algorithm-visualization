@@ -7,17 +7,18 @@ type Props = {
     onChange: (val: number) => void;
     min?: number;
     max?: number;
+    step?: number;
     label?: string;
 };
 
-function LabeledSlider({ value, onChange, min = 3, max = 64, label }: Props) {
+function LabeledSlider({ value, onChange, min = 3, max = 64, step = 1, label }: Props) {
     const [showTooltip, setShowTooltip] = React.useState(false);
 
     return (
         <div className={styles.sliderTrack}>
             {label && (
                 <span style={{ margin: 0 }}>
-                    {label} count (<strong>{value}</strong>):
+                    {label} (<strong>{value}</strong>):
                 </span>
             )}
             <span className={styles.minLabel}>{min}</span>
@@ -27,6 +28,7 @@ function LabeledSlider({ value, onChange, min = 3, max = 64, label }: Props) {
                     min={min}
                     max={max}
                     value={value}
+                    step={step}
                     onChange={(e) => onChange(parseInt(e.target.value))}
                     onMouseDown={() => setShowTooltip(true)}
                     onMouseUp={() => setShowTooltip(false)}

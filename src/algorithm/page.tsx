@@ -1,10 +1,14 @@
+import React from 'react';
+
 import { Overlay, Sections } from '@/core';
 
 import introSection from './introSection';
-import hyperparamsSection from './hyperparamsSection';
+import hyperparamsSection, { type Hyperparams, HyperparamContext, defaultParams} from './hyperparamsSection';
 import visualizationSection from './visualizationSection';
 
-function OverviewPage() {
+function AlgorithmPage() {
+    const [hyperparams, setHyperparams] =
+        React.useState<Hyperparams>(defaultParams);
     const sections = [introSection, hyperparamsSection, visualizationSection];
 
     return (
@@ -14,9 +18,11 @@ function OverviewPage() {
                 backgroundColor: '#ECC693',
             }}
         >
-            <Sections sections={sections} />
+            <HyperparamContext.Provider value={{ hyperparams, setHyperparams }}>
+                <Sections sections={sections} />
+            </HyperparamContext.Provider>
         </Overlay>
     );
 }
 
-export default OverviewPage;
+export default AlgorithmPage;

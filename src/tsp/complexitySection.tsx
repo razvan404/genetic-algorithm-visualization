@@ -42,7 +42,7 @@ function ComplexitySection() {
                     onChange={setNodeCount}
                     min={3}
                     max={64}
-                    label="Cities"
+                    label="Cities count"
                 />
 
                 <p>
