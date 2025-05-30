@@ -9,6 +9,8 @@ type Node = {
 };
 
 type Props = {
+    title?: string;
+    subtitle?: string;
     nodeCount?: number;
     radius?: number;
     width?: number;
@@ -24,10 +26,13 @@ type Props = {
     displayCitiesCount?: boolean;
     displayMaxRoutesCount?: boolean;
     displayReloadRoute?: boolean;
+    displayCurrentChromosome?: boolean;
     className?: string;
 };
 
 function RoundGraphVisualizer({
+    title,
+    subtitle,
     nodeCount = 8,
     radius = 150,
     width = 400,
@@ -43,6 +48,7 @@ function RoundGraphVisualizer({
     displayCitiesCount = false,
     displayMaxRoutesCount = false,
     displayReloadRoute = false,
+    displayCurrentChromosome = false,
     className,
 }: Props) {
     const centerX = width / 2;
@@ -82,7 +88,7 @@ function RoundGraphVisualizer({
 
             let timeout: ReturnType<typeof setTimeout> | null = null;
             if (duration) {
-                timeout = setTimeout(() => setOpacity(0), duration - 500);
+                timeout = setTimeout(() => setOpacity(0), duration - 300);
             }
             return timeout;
         },
@@ -91,6 +97,7 @@ function RoundGraphVisualizer({
 
     React.useEffect(() => {
         if (!animDurationMs) {
+            updateRoute();
             return;
         }
         let timeout = updateRoute(animDurationMs);
@@ -118,7 +125,15 @@ function RoundGraphVisualizer({
     }, [tspPath]);
 
     return (
-        <div className={className}>
+        <div className={className} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {title && (
+                <h3 style={{marginTop: 0, marginBottom: 5}}>{title}</h3>
+            )}
+            {subtitle && (
+                <p style={{ marginTop: 0, marginBottom: 5 }}>
+                    <em>{subtitle}</em>
+                </p>
+            )}
             <svg width={width} height={height}>
                 {/* Arrowhead definition */}
                 <defs>
@@ -230,7 +245,7 @@ function RoundGraphVisualizer({
                                             ? tspPathColor
                                             : invalidEdgeColor
                                     }
-                                    strokeWidth={isEdgeValid ? 2.5 : 1.5}
+                                    strokeWidth={isEdgeValid ? "0.5%" : "0.3%"}
                                     markerEnd={
                                         isEdgeValid
                                             ? 'url(#tspValidArrow)'
@@ -238,7 +253,7 @@ function RoundGraphVisualizer({
                                     }
                                     style={{
                                         opacity,
-                                        transition: 'opacity 0.5s ease-in-out',
+                                        transition: 'opacity 0.3s ease-in-out',
                                     }}
                                 />
                             );
@@ -309,8 +324,40 @@ function RoundGraphVisualizer({
                     .
                 </p>
             )}
+            {displayCurrentChromosome && tspPath.length > 0 && (
+                <div
+                    style={{
+                        display: 'flex',
+                        gap: '6px',
+                        marginTop: 0,
+                        marginBottom: 5,
+                    }}
+                >
+                    {tspPath.map((node, i) => (
+                        <div
+                            key={i}
+                            style={{
+                                width: 30,
+                                height: 30,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                background: '#fff',
+                                border: '2px solid #444',
+                                borderRadius: '6px',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                color: '#333',
+                            }}
+                            title={`Position ${i + 1}`}
+                        >
+                            {node.id}
+                        </div>
+                    ))}
+                </div>
+            )}
             {displayReloadRoute && (
-                <button style={{ width }} onClick={() => updateRoute()}>
+                <button style={{ width: width / 2, marginTop: 10, marginBottom: 5, border: "#ccc 1px solid" }} onClick={() => updateRoute()}>
                     Reload route
                 </button>
             )}
