@@ -3,6 +3,7 @@ import { HomePage } from './home';
 import { TspPage } from './tsp';
 import { OverviewPage } from './overview';
 import { VariationPage } from './variation';
+import { AlgorithmPage } from './algorithm';
 import Pages, { getRoute } from './pages';
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
                 <Route
                     path={getRoute(Pages.VARIATION)}
                     element={<VariationPage />}
+                />
+                <Route
+                    path={getRoute(Pages.ALGORITHM)}
+                    element={<AlgorithmPage />}
                 />
             </Routes>
         </BrowserRouter>

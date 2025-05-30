@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 import ThemeContext from '../theme';
@@ -48,7 +49,9 @@ function InfoSection({
         }
         return (
             <span
-                className={styles.nextSection}
+                className={classNames(styles.nextSection, {
+                    [styles.clickable]: isNextSection || isNextChapter,
+                })}
                 onClick={() => {
                     if (isNextSection) {
                         scrollToSection(nextSectionLink.slice(1));
