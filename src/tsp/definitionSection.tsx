@@ -1,7 +1,6 @@
 import React from 'react';
-import { InfoSection } from '@/core';
+import { InfoSection, RoundGraphVisualizer } from '@/core';
 
-import CompleteGraphVisualizer from './completeGraphVisualizer';
 import { Sections, getTitle } from './sections';
 
 function DefinitionSection() {
@@ -39,10 +38,12 @@ function DefinitionSection() {
 
     const figure = React.useMemo(() => {
         return (
-            <CompleteGraphVisualizer
+            <RoundGraphVisualizer
                 width={600}
                 height={600}
                 radius={250}
+                animDurationMs={4000}
+                edgeProbability={0.8}
                 nodeCount={10}
                 displayTotalDistance
             />

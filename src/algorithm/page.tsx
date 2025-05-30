@@ -5,11 +5,7 @@ import hyperparamsSection from './hyperparamsSection';
 import visualizationSection from './visualizationSection';
 
 function OverviewPage() {
-    const sections = [
-        introSection,
-        hyperparamsSection,
-        visualizationSection,
-    ];
+    const sections = [introSection, hyperparamsSection, visualizationSection];
 
     return (
         <Overlay

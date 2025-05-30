@@ -23,7 +23,7 @@ function VisualizationSection() {
             title={getTitle(Sections.VISUALIZATION)}
             description={description}
             figure={figure}
-            nextSectionText={"Thank you for reading!"}
+            nextSectionText={'Thank you for reading!'}
         />
     );
 }

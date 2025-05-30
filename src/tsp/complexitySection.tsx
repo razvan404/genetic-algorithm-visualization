@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { InfoSection, LabeledSlider } from '@/core';
+import { InfoSection, LabeledSlider, RoundGraphVisualizer } from '@/core';
 import { formatScientificNotation, factorialApprox } from '@/utils';
 
-import CompleteGraphVisualizer from './completeGraphVisualizer';
 import { Sections, getTitle } from './sections';
 
 function ComplexitySection() {
@@ -71,7 +70,7 @@ function ComplexitySection() {
 
     const figure = React.useMemo(() => {
         return (
-            <CompleteGraphVisualizer
+            <RoundGraphVisualizer
                 width={600}
                 height={600}
                 radius={250}
